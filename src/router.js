@@ -27,22 +27,11 @@ export default new Router({
         path: '/gamers',
         name: 'gamers',
         component: () => import(/* webpackChunkName: "gamers" */ './views/Gamers.vue')
+    },
+    {
+        path: '/update-result',
+        name: 'update-result',
+        component: () => import(/* webpackChunkName: "updateResults" */ './views/UpdateResults.vue')
     }
-    // },
-    // {
-    //   path: '/novo-canvas',
-    //   name: 'new-canvas',
-    //   component: () => import(/* webpackChunkName: "canvas" */ './views/Canvas.vue'),
-    // },
-    // {
-    //   path: '/canvas/:id',
-    //   name: 'canvas',
-    //   component: () => import(/* webpackChunkName: "canvas" */ './views/Canvas.vue'),
-    // },
-    // {
-    //   path: '/sobre',
-    //   name: 'about',
-    //   component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    // }
   ]
 })

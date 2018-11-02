@@ -17,29 +17,16 @@
 
 					<v-stepper-items>
 					<v-stepper-content step="1">
-						<step1 @go-step-2="e1 = 2"></step1>
+						<step1 v-if="e1 == 1" @go-step-2="e1 = 2"></step1>
 					</v-stepper-content>
 
 					<v-stepper-content step="2">
-						<step2 @go-step-2="e1 = 3"></step2>	
+						<step2 v-if="e1 == 2" @go-step-3="e1 = 3"></step2>	
 						<v-btn flat @click="e1 = 1">Cancel</v-btn>
 					</v-stepper-content>
 
 					<v-stepper-content step="3">
-						<v-card
-						class="mb-5"
-						color="grey lighten-1"
-						height="200px"
-						></v-card>
-
-						<v-btn
-						color="primary"
-						@click="e1 = 1"
-						>
-						Continue
-						</v-btn>
-
-						<v-btn flat>Cancel</v-btn>
+						<step3 v-if="e1 == 3"></step3>	
 					</v-stepper-content>
 				</v-stepper-items>
 			</v-stepper>
@@ -51,11 +38,13 @@
 <script>
 import Step1 from '@/components/Step1.vue'
 import Step2 from '@/components/Step2.vue'
+import Step3 from '@/components/Step3.vue'
 export default {
 	name: "Home",
 	components: {
 		Step1,
-		Step2
+		Step2,
+		Step3
 	},
 	data() {
 		return {
@@ -67,5 +56,9 @@ export default {
 <style lang="scss" scoped>
 .v-stepper {
 	width: 100%;
+	.v-stepper__wrapper {
+		min-height: 200px;
+	}
 }
+
 </style>

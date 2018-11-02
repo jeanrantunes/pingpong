@@ -50,14 +50,17 @@ export default {
             e.preventDefault()
             this.loader = true
             let ids = []
+            /*get ids of users*/
             this.users.forEach(item => {
                 ids.push(item.id)
             })
-            console.log(this.$store.getters.getNameChampionschip)
-            console.log(ids)
             this.addUsers({
                 name: this.$store.getters.getNameChampionschip,
                 users: ids
+            }).then(response => {
+                if(response.status === 200) {
+                    this.$emit('go-step-3')
+                }
             }) 
         }
     }
@@ -65,9 +68,7 @@ export default {
 </script>
 <style lang="scss">
 .v-select-list {
-    .v-list {
-        max-height: 150px;
-    }
+    max-height: 150px;
 }
 .v-btn {
     float: right;

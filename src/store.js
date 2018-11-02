@@ -20,7 +20,8 @@ export default new Vuex.Store({
 			"token": ""
 		},
 		listUsers: [],
-		dataChampionschip: {}
+		dataChampionschip: {},
+		matches: []
 
 	},
 	getters: {
@@ -41,7 +42,8 @@ export default new Vuex.Store({
 	mutations: {
 		setUserData: (state, userData) => state.user = userData,
 		setListUsers: (state, data) => state.listUsers = data,
-		setChampionschip: (state, data) => state.dataChampionschip = data
+		setChampionschip: (state, data) => state.dataChampionschip = data,
+		setMatchs: (state, data) => state.matches = data
 	},
 	actions: {
 		login(ctx, params) {
@@ -99,6 +101,17 @@ export default new Vuex.Store({
 			return requester.put('/championships/'+ this.state.dataChampionschip.id, data)
 			.then(response => {
 				console.log(response)
+				return response
+			})
+			.catch(error => {
+				alert(error)
+				return error
+			})
+		},
+		getMatches(ctx, page) {
+			return requester.get('/championships/'+ this.state.dataChampionschip.id + '/matches?page=' + page)
+			.then(response => {
+				ctx.commit('setMatchs', response.data)
 				return response
 			})
 			.catch(error => {
