@@ -2,13 +2,13 @@
 	<div>
 		<h1>Home</h1>
 		<v-layout row wrap align-center>
-			<v-stepper v-model="e1">
+			<v-stepper v-model="step">
 				<v-stepper-header>
-					<v-stepper-step :complete="e1 > 1" step="1">Iniciar campeonato</v-stepper-step>
+					<v-stepper-step :complete="step > 1" step="1">Iniciar campeonato</v-stepper-step>
 
 					<v-divider></v-divider>
 
-					<v-stepper-step :complete="e1 > 2" step="2">Escolha de jogadores</v-stepper-step>
+					<v-stepper-step :complete="step > 2" step="2">Escolha de jogadores</v-stepper-step>
 
 					<v-divider></v-divider>
 
@@ -17,16 +17,16 @@
 
 					<v-stepper-items>
 					<v-stepper-content step="1">
-						<step1 v-if="e1 == 1" @go-step-2="e1 = 2"></step1>
+						<step1 v-if="step == 1" @go-step-2="setStep(2)"></step1>
 					</v-stepper-content>
 
 					<v-stepper-content step="2">
-						<step2 v-if="e1 == 2" @go-step-3="e1 = 3"></step2>	
-						<v-btn flat @click="e1 = 1">Cancel</v-btn>
+						<step2 v-if="step == 2" @go-step-3="setStep(3)"></step2>	
+						<v-btn flat left @click="setStep(1)">Anterior</v-btn>
 					</v-stepper-content>
 
 					<v-stepper-content step="3">
-						<step3 v-if="e1 == 3"></step3>	
+						<step3 v-if="step == 3"></step3>	
 					</v-stepper-content>
 				</v-stepper-items>
 			</v-stepper>
@@ -48,17 +48,66 @@ export default {
 	},
 	data() {
 		return {
-			e1: 0
+			step: this.$store.state.step
+		}
+	},
+	methods: {
+		setStep(step) {
+			this.step = step
+			this.$store.commit('setStep',step)
 		}
 	}
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .v-stepper {
 	width: 100%;
 	.v-stepper__wrapper {
 		min-height: 200px;
 	}
 }
+.loadind-container {
+	display: flex;
+	justify-content: center;
+}
+.custom-loader {
+	animation: loader 1s infinite;
+	display: flex;
+	i {
+		font-size: 130px;
+	}
+}
 
+@-moz-keyframes loader {
+	from {
+		transform: rotate(0);
+	}
+	to {
+		transform: rotate(360deg);
+		}
+	}
+@-webkit-keyframes loader {
+	from {
+		transform: rotate(0);
+	}
+	to {
+		transform: rotate(360deg);
+		}
+	}
+@-o-keyframes loader {
+	from {
+		transform: rotate(0);
+	}
+	to {
+		transform: rotate(360deg);
+		}
+	}
+@keyframes loader {
+	from {
+		transform: rotate(0);
+	}
+	to {
+		transform: rotate(360deg);
+		}
+	}
 </style>

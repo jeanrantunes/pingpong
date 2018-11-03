@@ -17,10 +17,14 @@
                 color="primary"
                 type="submit"
                 >
-                Continue
+                Próximo
 		    </v-btn>
         </v-form>
-        <img v-else src="@/assets/loader.gif" alt="">
+        <div v-else class="loadind-container">
+            <span slot="loader" class="custom-loader">
+                <v-icon light>cached</v-icon>
+            </span>
+        </div>
     </div>
 </template>
 <script>
@@ -48,25 +52,34 @@ export default {
         }),
         onSubmit(e) {
             e.preventDefault()
-            this.loader = true
+            this.loader = false
             let ids = []
             /*get ids of users*/
             this.users.forEach(item => {
                 ids.push(item.id)
             })
-            this.addUsers({
-                name: this.$store.getters.getNameChampionschip,
-                users: ids
-            }).then(response => {
-                if(response.status === 200) {
-                    this.$emit('go-step-3')
-                }
-            }) 
+            if(this.selected.length > 0) {
+                this.addUsers({
+                    name: this.$store.getters.getNameChampionschip,
+                    users: ids
+                }).then(response => {
+                    if(response.status === 200) {
+                        this.loader = false
+                        this.$emit('go-step-3')
+                    }
+                }) 
+            }
+            else {
+                alert("Selecione os jogadores")
+            }
         }
     }
 }
 </script>
 <style lang="scss">
+.v-select {
+    margin-bottom: 83px;
+}
 .v-select-list {
     max-height: 150px;
 }

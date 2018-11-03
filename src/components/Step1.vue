@@ -1,6 +1,7 @@
 <template>
     <div>
         <v-form v-if="!loader" @submit="onSubmit" v-model="valid">
+            <h2>De um nome para o campeonato</h2>
             <v-text-field
                 v-model="name"
                 :rules="nameRules"
@@ -11,10 +12,14 @@
                 color="primary"
                 type="submit"
                 >
-                Continue
+                Próximo
 		    </v-btn>
         </v-form>
-        <img v-else src="@/assets/loader.gif" alt="">
+        <div v-else class="loadind-container">
+            <span slot="loader" class="custom-loader">
+                <v-icon light>cached</v-icon>
+            </span>
+        </div>
     </div>
 </template>
 <script>
@@ -38,15 +43,19 @@ export default {
         }),
         onSubmit(e) {
             e.preventDefault()
-            this.loader = true
-            this.setName(this.name)
-            .then(response => {
-                if(response.status === 200) {
-                    this.$emit('go-step-2')
-                    this.loader = false
-                }
-                
-            })
+            if(this.valid) {
+                this.loader = true
+                this.setName(this.name)
+                .then(response => {
+                    if(response.status === 200) {
+                        this.$emit('go-step-2')
+                        this.loader = false
+                    }                 
+                })
+            }
+            else {
+                alert("Dados inválidos!")
+            }
         }
     }
 }

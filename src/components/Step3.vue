@@ -50,17 +50,19 @@ export default {
         this.getMatches(this.page)
         .then(response => {
             this.matches = this.$store.state.matches
+            this.page = this.$store.state.page
         })
     },
     data() {
         return {
             loader: false,
-            page: 1,
+            page: 9,
             matches: []
         }
     },
     watch: {
         page(e) {
+            this.$store.commit('setPage', this.page)
             this.getMatches(e)
             .then(response => {
                 this.matches = this.$store.state.matches
@@ -72,47 +74,16 @@ export default {
            getMatches:'getMatches'
         }),
         updateResults(item) {
-            console.log(item)
+            this.$router.push({ name: 'update-result', params: { item: item } })
         }
     }
 }
 </script>
-<style lang="scss">
-    .custom-loader {
-        animation: loader 1s infinite;
-        display: flex;
+<style lang="scss" scoped>
+.v-chip {
+    .v-icon {
+        font-size: 25px;
     }
-    @-moz-keyframes loader {
-        from {
-            transform: rotate(0);
-        }
-        to {
-            transform: rotate(360deg);
-            }
-        }
-    @-webkit-keyframes loader {
-        from {
-            transform: rotate(0);
-        }
-        to {
-            transform: rotate(360deg);
-            }
-        }
-    @-o-keyframes loader {
-        from {
-            transform: rotate(0);
-        }
-        to {
-            transform: rotate(360deg);
-            }
-        }
-    @keyframes loader {
-        from {
-            transform: rotate(0);
-        }
-        to {
-            transform: rotate(360deg);
-            }
-        }
+}
 </style>
 

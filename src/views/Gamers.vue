@@ -2,7 +2,11 @@
     <div>
         <h1>Ranking</h1>
         <players-list v-if="!loader"></players-list>
-        <img v-else src="@/assets/loader.gif" alt="">
+        <div v-else class="loadind-container">
+            <span slot="loader" class="custom-loader">
+                <v-icon light>cached</v-icon>
+            </span>
+        </div>
     </div>
 </template>
 <script>
@@ -15,8 +19,7 @@ export default {
     },
     beforeMount() {
         this.users().then(response => {
-            this.loader = false
-            
+            this.loader = false  
         })
     },
     data() {

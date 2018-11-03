@@ -1,18 +1,16 @@
 <template>
     <div>
-        <table>
-            <thead>
-                <th>Nome</th>
-                <th>Pontuação</th>
-            </thead>
-            <tbody>
-                <tr v-for="element in listUsers" :key="element.index">
-                    <td>{{element.name}}</td>
-                    <td v-if="element.rating">{{element.rating}}</td>
-                    <td v-else>0</td>
-                </tr>
-            </tbody>
-        </table>
+        <v-data-table
+            :headers="headers"
+            :items="listUsers"
+            hide-actions
+            class="elevation-1"
+        >
+            <template slot="items" slot-scope="props">
+                <td>{{ props.item.name }}</td>
+                <td class="text-xs-right">{{ props.item.rating }}</td>
+            </template>
+        </v-data-table>
     </div>
 </template>
 <script>
@@ -21,10 +19,19 @@ export default {
     name: 'PlayersList',
     beforeMount() {
         this.listUsers = this.$store.getters.getListUser
-        console.log(this.listUsers)
     },
     data() {
         return {
+            headers: [
+                {
+                    text: 'Nome',
+                    value: 'name'
+                },
+                {
+                    text: 'Pontuação',
+                    value: 'name'
+                }
+            ],
             listUsers:[]
         }
     },
