@@ -29,6 +29,14 @@ export default new Vuex.Store({
 		getListUser: state => {
 			return state.listUsers
 			.sort((a,b) => {
+				a.rating = parseFloat(a.rating)
+				b.rating = parseFloat(b.rating)
+				if(!a.rating) {
+					a.rating = 0
+				}
+				if(!b.rating) {
+					b.rating = 0
+				}
 				if (a.rating > b.rating)
 					return -1;
 				if (a.rating < b.rating)

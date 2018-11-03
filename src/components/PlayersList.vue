@@ -8,7 +8,8 @@
         >
             <template slot="items" slot-scope="props">
                 <td>{{ props.item.name }}</td>
-                <td class="text-xs-right">{{ props.item.rating }}</td>
+                <td class="text-xs-right" v-if="props.item.rating">{{ props.item.rating }}</td>
+                <td class="text-xs-right" v-else>0</td>
             </template>
         </v-data-table>
     </div>
@@ -25,11 +26,13 @@ export default {
             headers: [
                 {
                     text: 'Nome',
-                    value: 'name'
+                    value: 'name',
+                    sortable: false
                 },
                 {
                     text: 'Pontuação',
-                    value: 'name'
+                    value: 'name',
+                    sortable: false
                 }
             ],
             listUsers:[]
