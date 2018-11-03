@@ -56,6 +56,7 @@ export default {
             match: [],
             loader: false,
             pointsRules: [
+                v => !!v || 'É necessário ter um valor entre 0 e 11',
                 v => v >= 0 || "Não pode ser menor que 0 pontos",
                 v => v <= 11 || "Máximo 11 pontos"
             ]

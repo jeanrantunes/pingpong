@@ -25,7 +25,8 @@ export default new Vuex.Store({
 		step: 1,
 		page: 9,
 		btnRanking: false,
-		btnGetOut: false
+		btnGetOut: false,
+		nrUsers: 0
 	},
 	getters: {
 		getListUser: state => {
@@ -58,7 +59,8 @@ export default new Vuex.Store({
 		setStep: (state, s) => state.step = s,
 		setPage: (state, p) => state.page = p,
 		toggleBtnRanking: (state, s) => state.btnRanking = s,
-		toggleBtnGetOut: (state, s) => state.btnGetOut = s
+		toggleBtnGetOut: (state, s) => state.btnGetOut = s,
+		setNrUsers: (state, n) => state.nrUsers = n,
 	},
 	actions: {
 		login(ctx, params) {
@@ -80,7 +82,6 @@ export default new Vuex.Store({
 			.then(response => {
 				if(response.status === 200) {
 					ctx.commit('setUserData', response.data)
-					console.log(params.newUser)
 					ctx.dispatch('login', {
 						dataUser: {
 							email: params.newUser.email,
@@ -88,9 +89,6 @@ export default new Vuex.Store({
 						},
 						router: params.router
 					})
-					// console.log(response.data)
-					// axios.defaults.headers.common = {'Authorization': "bearer " + response.data.token}
-					// params.router.push('home')
 				}
 			}).catch(error => {
 				alert(error)
@@ -122,7 +120,6 @@ export default new Vuex.Store({
 			})
 		},
 		includeUsers(ctx, data) {
-			console.log(data)
 			return requester.put('/championships/'+ this.state.dataChampionschip.id, data)
 			.then(response => {
 				return response
@@ -135,7 +132,9 @@ export default new Vuex.Store({
 		getMatches(ctx, page) {
 			return requester.get('/championships/'+ this.state.dataChampionschip.id + '/matches?page=' + page)
 			.then(response => {
-				ctx.commit('setMatchs', response.data)
+				if(response.data.data.length > 0) {
+					ctx.commit('setMatchs', response.data)	
+				}
 				return response
 			})
 			.catch(error => {
@@ -144,7 +143,6 @@ export default new Vuex.Store({
 			})
 		},
 		updateResult(ctx, params) {
-			console.log(params)
 			return requester.put('/matches/'+ params.id, params.data)
 			.then(response => {
 				return response
