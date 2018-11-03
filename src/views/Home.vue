@@ -31,7 +31,6 @@
 				</v-stepper-items>
 			</v-stepper>
 		</v-layout>
-		<router-link to="/gamers">Jogadores</router-link>
 	</div> 
 </template>
 
@@ -45,6 +44,10 @@ export default {
 		Step1,
 		Step2,
 		Step3
+	},
+	beforeMount() {
+		this.$store.commit('toggleBtnRanking', true)
+		this.$store.commit('toggleBtnGetOut', true)
 	},
 	data() {
 		return {

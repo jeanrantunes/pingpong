@@ -45,6 +45,10 @@
 import { mapActions } from "vuex";
 export default {
     name: "Login",
+    beforeMount() {
+		this.$store.commit('toggleBtnRanking', false)
+		this.$store.commit('toggleBtnGetOut', false)
+	},
     data() {
         return {
             show: false,

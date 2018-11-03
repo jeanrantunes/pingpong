@@ -23,7 +23,9 @@ export default new Vuex.Store({
 		dataChampionschip: {},
 		matches: [],
 		step: 1,
-		page: 9
+		page: 9,
+		btnRanking: false,
+		btnGetOut: false
 	},
 	getters: {
 		getListUser: state => {
@@ -54,7 +56,9 @@ export default new Vuex.Store({
 		setChampionschip: (state, data) => state.dataChampionschip = data,
 		setMatchs: (state, data) => state.matches = data,
 		setStep: (state, s) => state.step = s,
-		setPage: (state, p) => state.page = p
+		setPage: (state, p) => state.page = p,
+		toggleBtnRanking: (state, s) => state.btnRanking = s,
+		toggleBtnGetOut: (state, s) => state.btnGetOut = s
 	},
 	actions: {
 		login(ctx, params) {
@@ -76,8 +80,17 @@ export default new Vuex.Store({
 			.then(response => {
 				if(response.status === 200) {
 					ctx.commit('setUserData', response.data)
-					axios.defaults.headers.common = {'Authorization': "bearer " + response.data.token}
-					params.router.push('home')
+					console.log(params.newUser)
+					ctx.dispatch('login', {
+						dataUser: {
+							email: params.newUser.email,
+							password: params.newUser.password
+						},
+						router: params.router
+					})
+					// console.log(response.data)
+					// axios.defaults.headers.common = {'Authorization': "bearer " + response.data.token}
+					// params.router.push('home')
 				}
 			}).catch(error => {
 				alert(error)
@@ -109,6 +122,7 @@ export default new Vuex.Store({
 			})
 		},
 		includeUsers(ctx, data) {
+			console.log(data)
 			return requester.put('/championships/'+ this.state.dataChampionschip.id, data)
 			.then(response => {
 				return response

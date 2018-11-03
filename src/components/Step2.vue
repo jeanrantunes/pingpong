@@ -55,7 +55,7 @@ export default {
             this.loader = false
             let ids = []
             /*get ids of users*/
-            this.users.forEach(item => {
+            this.selected.forEach(item => {
                 ids.push(item.id)
             })
             if(this.selected.length > 0) {

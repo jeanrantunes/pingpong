@@ -21,6 +21,8 @@ export default {
         this.users().then(response => {
             this.loader = false  
         })
+		this.$store.commit('toggleBtnRanking', false)
+		this.$store.commit('toggleBtnGetOut', true)
     },
     data() {
         return {

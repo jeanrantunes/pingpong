@@ -44,7 +44,9 @@ export default {
             this.points1 = this.match.score_2.split(" ")[0]
             this.points2 = this.match.score_2.split(" ")[2]
         }
-
+        
+		this.$store.commit('toggleBtnRanking', true)
+		this.$store.commit('toggleBtnGetOut', true)
     },
     data() {
         return {
