@@ -55,6 +55,7 @@ export default {
             }
             else {
                 alert("Dados inválidos!")
+                this.loader = false
             }
         }
     }

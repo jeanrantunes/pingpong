@@ -69,6 +69,7 @@ export default {
         });
       } else {
         alert("Selecione pelo menos 2 jogadores");
+        this.loader = false;
       }
     }
   }

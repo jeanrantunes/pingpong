@@ -22,11 +22,12 @@
 
 					<v-stepper-content step="2">
 						<step2 v-if="step == 2" @go-step-3="setStep(3)"></step2>	
-						<v-btn flat left @click="setStep(1)">Anterior</v-btn>
+						<v-btn flat left @click="setStep(1)" class="prev">Anterior</v-btn>
 					</v-stepper-content>
 
 					<v-stepper-content step="3">
-						<step3 v-if="step == 3"></step3>	
+						<step3 v-if="step == 3"></step3>
+						<v-btn flat left @click="setStep(2)" class="prev">Anterior</v-btn>	
 					</v-stepper-content>
 				</v-stepper-items>
 			</v-stepper>
@@ -72,6 +73,9 @@ export default {
 .loadind-container {
 	display: flex;
 	justify-content: center;
+}
+.prev {
+	float: left;
 }
 .custom-loader {
 	animation: loader 1s infinite;

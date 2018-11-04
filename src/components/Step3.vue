@@ -35,14 +35,15 @@
                     </v-list-tile>
                 </template>
             </v-list>
+            <div>
+                <v-btn @click="navigator(0)" class="prev" fab dark color="indigo">
+                    <v-icon dark>navigate_before</v-icon>
+                </v-btn>
 
-            <v-btn @click="navigator(0)" class="prev" fab dark color="indigo">
-                <v-icon dark>navigate_before</v-icon>
-            </v-btn>
-
-            <v-btn @click="navigator(1)" class="next" fab dark color="indigo">
-                <v-icon dark>navigate_next</v-icon>
-            </v-btn>
+                <v-btn @click="navigator(1)" class="next" fab dark color="indigo">
+                    <v-icon dark>navigate_next</v-icon>
+                </v-btn>
+            </div>
         </div>
         <div v-else class="loadind-container">
             <span slot="loader" class="custom-loader">
@@ -120,11 +121,8 @@ export default {
         font-size: 25px;
     }
 }
-.next {
-    float: right;
-}
-.prev {
-    float: left;
+.v-btn {
+    float: none;
 }
 </style>
 
