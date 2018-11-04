@@ -74,7 +74,7 @@ export default {
                 "name":"",
                 "email":"",
                 "password":"",
-                "rating": "0"
+                "rating": "1000"
             },
             rules: {
                 required: value => !!value || "Obrigatório",
