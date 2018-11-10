@@ -1,11 +1,23 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+import router from './router'
 
 Vue.use(Vuex)
 
 const requester = axios.create({
 	baseURL: "http://api-navetest.herokuapp.com/v1"
+})
+
+axios.defaults.headers.common['Authorization'] = "bearer " + window.localStorage.getItem('token-app')
+
+requester.interceptors.response.use((config) => {
+	return config
+}, function (error) {
+	if (error.response.status === 401) {
+		router.push('/')
+	}
+    return Promise.reject(error);
 })
 
 export default new Vuex.Store({
@@ -40,11 +52,13 @@ export default new Vuex.Store({
 				if(!b.rating) {
 					b.rating = 0
 				}
-				if (a.rating > b.rating)
-					return -1;
-				if (a.rating < b.rating)
-					return 1;
-				return 0;
+				if (a.rating > b.rating) {
+					return -1
+				}
+				if (a.rating < b.rating) {
+					return 1
+				}
+				return 0
 			})
 		},
 		getNameChampionschip: state => {
@@ -60,7 +74,7 @@ export default new Vuex.Store({
 		setPage: (state, p) => state.page = p,
 		toggleBtnRanking: (state, s) => state.btnRanking = s,
 		toggleBtnGetOut: (state, s) => state.btnGetOut = s,
-		setNrUsers: (state, n) => state.nrUsers = n,
+		setNrUsers: (state, n) => state.nrUsers = n
 	},
 	actions: {
 		login(ctx, params) {
@@ -69,11 +83,12 @@ export default new Vuex.Store({
 				if(response.status === 200) {
 					ctx.commit('setUserData',response.data)
 					axios.defaults.headers.common = {'Authorization': "bearer " + response.data.token}
+					window.localStorage.setItem('token-app', response.data.token)
 					params.router.push('home')
 				}
 				return response
 			}).catch(error => {
-				alert(error)
+				alert('Verifique se o e-mail e/ou senha estão corretas')
 				return error
 			})
 		},
@@ -91,12 +106,11 @@ export default new Vuex.Store({
 					})
 				}
 			}).catch(error => {
-				alert(error)
 				return error
 			})
 		},
 		getUsers(ctx) {
-			return requester.get('/users', {headers: {'Authorization': "Bearer " + this.state.user.token}})
+			return requester.get('/users')
 			.then(response => {
 				if(response.status === 200) {
 					ctx.commit('setListUsers', response.data)
@@ -104,7 +118,6 @@ export default new Vuex.Store({
 				return response
 			})
 			.catch(error => {
-				alert(error)
 				return error
 			})
 		},
@@ -115,7 +128,6 @@ export default new Vuex.Store({
 				return response
 			})
 			.catch(error => {
-				alert(error)
 				return error
 			})
 		},
@@ -125,7 +137,6 @@ export default new Vuex.Store({
 				return response
 			})
 			.catch(error => {
-				alert(error)
 				return error
 			})
 		},
@@ -138,7 +149,6 @@ export default new Vuex.Store({
 				return response
 			})
 			.catch(error => {
-				alert(error)
 				return error
 			})
 		},
@@ -148,7 +158,6 @@ export default new Vuex.Store({
 				return response
 			})
 			.catch(error => {
-				alert(error)
 				return error
 			})
 		}
